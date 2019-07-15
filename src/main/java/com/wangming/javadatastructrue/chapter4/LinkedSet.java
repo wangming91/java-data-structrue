@@ -30,7 +30,7 @@ public class LinkedSet<T> implements SetADT<T> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return count == 0;
     }
 
     @Override
