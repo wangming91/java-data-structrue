@@ -47,12 +47,12 @@ public class LinkedSet<T> implements SetADT<T> {
 
     @Override
     public void addAll(SetADT<T> target) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new LinkedIterator<>(count, contents);
     }
 
     @Override
@@ -84,7 +84,38 @@ public class LinkedSet<T> implements SetADT<T> {
 
     @Override
     public T remove(T target) throws Exception {
-        return null;
+        boolean found = false;
+        if (isEmpty())
+            throw new RuntimeException("集合为空，不能删除");
+
+        LinearNode<T> previous, current;
+        T result = null;
+
+        if (contents.getElement().equals(target)) {
+            result = contents.getElement();
+            contents = contents.getNext();
+        } else {
+            previous = contents;
+            current = contents.getNext();
+            for (int i = 0; i < count && !found; i++) {
+                if (current.getElement().equals(target)) {
+                    found = true;
+                } else {
+                    previous = current;
+                    current = current.getNext();
+                }
+            }
+
+            if (!found)
+                throw new RuntimeException("该元素不在集合中，无法进行删除");
+
+            result = current.getElement();
+            previous.setNext(current.getNext());
+        }
+        count--;
+
+
+        return result;
     }
 
     @Override
