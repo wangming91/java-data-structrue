@@ -1,6 +1,7 @@
 package com.wangming.javadatastructrue.chapter7.数组实现;
 
 import com.wangming.javadatastructrue.chapter7.QueueADT;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 
 /**
  * @Author: ming.wang
@@ -36,9 +37,17 @@ public class ArrayQueue<T> implements QueueADT<T> {
 
     @Override
     public T dequeue() {
+        if (isEmpty())
+            throw new RuntimeException("");
         T result = null;
+        count--;
+        result = contents[0];
 
+        for (int i = 0; i < size(); i++) {
+            contents[i] = contents[i + 1];
+        }
 
+        contents[count] = null;
         return result;
     }
 
